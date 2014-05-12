@@ -4,6 +4,7 @@
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
       <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.2/handlebars.min.js"></script>
+    //  <script src="http://airbnb.github.io/infinity/build/infinity.min.js"></script>
       <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
       <style>
       ul.matches
@@ -46,8 +47,12 @@
             $('.btn-primary').click(function() {
 
                var query = $('#query').val();
+               $("#searchResults").html('');
 
                $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
+                //  var $el = $('#searchResults');
+                //  var listView = new infinity.ListView($el);
+
                   var output = match_template(data);
                   $('#searchResults').html(output);
                });
@@ -75,11 +80,11 @@
             <li>
                <div class="influencer-match">
                <div class="influencer-thumb">
-                  <img src="{{avatar.medium}}" />
+                  <img width="128" height="128" src="{{thumbnailUrl}}" />
                </div>
                <div class="influencer-details">
                   <div class="influencer-detail-big">
-                     {{name}}
+                     {{realName}}
                   </div>
                   <div class="influencer-detail-small">
                      {{location}}
