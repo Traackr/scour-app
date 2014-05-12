@@ -5,6 +5,33 @@
       <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.2/handlebars.min.js"></script>
       <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+      <style>
+      ul.matches
+      {
+          list-style-type: none;
+      }
+
+      .influencer-thumb {
+         display: inline-block;
+      }
+
+      .influencer-detail-big {
+         line-height: 1.11111111111;
+         font-size: 1.125em;
+         color: #f74902;
+         font-weight: 700;
+      }
+
+      .influencer-details {
+         display: inline-block;
+         margin-bottom: 16px;
+         margin-left: 8px;
+      }
+      .influencer-match {
+         margin-bottom: 16px;
+         min-height: 80px;
+      }
+      </style>
       <script>
          $(document).ready(function() {
             var match_template  = Handlebars.compile($('.matches-template').html())
@@ -46,9 +73,21 @@
          <ul class="matches">
          {{#each matches}}
             <li>
-            <img src="{{avatar.medium}}" />
-            {{name}}
+               <div class="influencer-match">
+               <div class="influencer-thumb">
+                  <img src="{{avatar.medium}}" />
+               </div>
+               <div class="influencer-details">
+                  <div class="influencer-detail-big">
+                     {{name}}
+                  </div>
+                  <div class="influencer-detail-small">
+                     {{location}}
+                  </div>
+               </div>
+               </div>
             </li>
+            <div style="clear:both"></div>
          {{/each}}
          </ul>
       </script>
