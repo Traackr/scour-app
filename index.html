@@ -9,14 +9,22 @@
          $(document).ready(function() {
             var match_template  = Handlebars.compile($('.matches-template').html())
 
+            /*
             $.getJSON('http://api-qa.traackr.com/1.0/influencers/search?keywords=%22cloud%20computing%22&is_tag_prefix=false&gender=all&lang=all&count=25&page=0', function(data) {
                debugger
                //alert(data);
             });
+            */
 
-            $.getJSON('influencers.json', function(data) {
-               var output = match_template(data);
-               $('#searchResults').html(output);
+            $('.btn-primary').click(function() {
+
+               var query = $('#query').val();
+
+               $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
+                  var output = match_template(data);
+                  $('#searchResults').html(output);
+               });
+
             });
 
          });
@@ -41,7 +49,7 @@
             <img src="{{avatar.medium}}" />
             {{name}}
             </li>
-         {{/each}} 
+         {{/each}}
          </ul>
       </script>
    </body>
