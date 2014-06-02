@@ -9,10 +9,23 @@
       ul.matches
       {
           list-style-type: none;
+          width: 100%;
       }
 
       .influencer-thumb {
          display: inline-block;
+         float: left;
+         width: 25%;
+         box-sizing: border-box;
+      }
+
+      .influencer-details {
+         display: inline-block;
+         float: left;
+         margin-bottom: 16px;
+         margin-left: 8px;
+         width: 75%;
+         box-sizing: border-box;
       }
 
       .influencer-detail-big {
@@ -20,12 +33,6 @@
          font-size: 1.125em;
          color: #f74902;
          font-weight: 700;
-      }
-
-      .influencer-details {
-         display: inline-block;
-         margin-bottom: 16px;
-         margin-left: 8px;
       }
       .influencer-match {
          margin-bottom: 16px;
@@ -36,10 +43,9 @@
          $(document).ready(function() {
             var match_template  = Handlebars.compile($('.matches-template').html())
 
-            $('.btn-primary').click(function() {
-
+            var getSearchResults = function () {
                var query = $('#query').val();
-               var key = window.location.hash;
+               var key = 'd3c21874c3f21c4d3bb32256855769ca';
                $("#searchResults").html('');
 
                // $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
@@ -50,7 +56,14 @@
                   var output = match_template(data);
                   $('#searchResults').html(output);
                });
+            }
 
+            $('.btn-primary').click(function() {
+               getSearchResults();
+            });
+
+            $('#query').keyup(function() {
+               getSearchResults();
             });
 
          });
@@ -73,17 +86,22 @@
          {{#each influencers}}
             <li>
                <div class="influencer-match">
-               <div class="influencer-thumb">
-                  <img width="128" height="128" src="{{avatar.medium}}" />
-               </div>
-               <div class="influencer-details">
-                  <div class="influencer-detail-big">
-                     {{name}}
+                  <div class="influencer-thumb">
+                     {{#if avatar.medium}}
+                        <img width="128" height="128" src="{{avatar.medium}}" />
+                     {{else}}
+                        <img width="128" height="128" src="http://blogs.villagevoice.com/runninscared/hogan.jpg" />
+                     {{/if}}
                   </div>
-                  <div class="influencer-detail-small">
-                     {{location}}
+                  <div class="influencer-details">
+                     <div class="influencer-detail-big">
+                        {{name}}
+                     </div>
+                     <div class="influencer-detail-small">
+                        {{#if location}}<strong>{{location}}</strong><br />{{/if}}
+                        {{description}}
+                     </div>
                   </div>
-               </div>
                </div>
             </li>
             <div style="clear:both"></div>
