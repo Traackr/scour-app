@@ -12,6 +12,10 @@
           width: 100%;
       }
 
+      .influencer {
+         margin-bottom: 16px;
+      }
+
       .influencer-thumb {
          display: inline-block;
          float: left;
@@ -23,7 +27,7 @@
          display: inline-block;
          float: left;
          margin-bottom: 16px;
-         margin-left: 8px;
+         /*margin-left: 8px;*/
          width: 75%;
          box-sizing: border-box;
       }
@@ -45,7 +49,7 @@
 
             var getSearchResults = function () {
                var query = $('#query').val();
-               var key = 'd3c21874c3f21c4d3bb32256855769ca';
+               var key = window.location.hash.substr(1)
                $("#searchResults").html('');
 
                // $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
@@ -84,7 +88,7 @@
       <script type="text/handlebars-template" class="matches-template">
          <ul class="matches">
          {{#each influencers}}
-            <li>
+            <li class="influencer">
                <div class="influencer-match">
                   <div class="influencer-thumb">
                      {{#if avatar.medium}}
