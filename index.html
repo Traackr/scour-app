@@ -68,15 +68,15 @@
 
       <script type="text/handlebars-template" class="matches-template">
          <ul class="matches">
-         {{#each matches}}
+         {{#each influencers}}
             <li>
                <div class="influencer-match">
                <div class="influencer-thumb">
-                  <img width="128" height="128" src="{{thumbnailUrl}}" />
+                  <img width="128" height="128" src="{{avatar.medium}}" />
                </div>
                <div class="influencer-details">
                   <div class="influencer-detail-big">
-                     {{realName}}
+                     {{name}}
                   </div>
                   <div class="influencer-detail-small">
                      {{location}}
