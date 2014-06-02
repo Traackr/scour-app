@@ -39,9 +39,11 @@
             $('.btn-primary').click(function() {
 
                var query = $('#query').val();
+               var key = window.location.hash;
                $("#searchResults").html('');
 
-               $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
+               // $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
+               $.getJSON('http://api.traackr.com/1.0/influencers/lookup?is_tag_prefix=false&name=' + encodeURIComponent(query) + '&gender=all&count=25&page=0&sort=name&sort_order=asc&api_key=' + key, function(data) {
                 //  var $el = $('#searchResults');
                 //  var listView = new infinity.ListView($el);
 
