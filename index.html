@@ -6,6 +6,10 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.2/handlebars.min.js"></script>
       <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
       <style>
+      .error {
+         color: #ff0000;
+      }
+
       ul.matches
       {
           list-style-type: none;
@@ -45,21 +49,41 @@
       </style>
       <script>
          $(document).ready(function() {
-            var match_template  = Handlebars.compile($('.matches-template').html())
+            var match_template  = Handlebars.compile($('.matches-template').html()),
+            ERROR_MESSAGE = $("#errorMessage")
+
+            ERROR_MESSAGE.hide();
+
+            var showError = function(errorMsg) {
+               ERROR_MESSAGE.show();
+               ERROR_MESSAGE.text(errorMsg);
+            }
+
+            var validate = function() {
+               if (window.location.hash && window.location.hash.length) {
+                  ERROR_MESSAGE.hide();
+                  return true;
+               } else {
+                  showError("Need a valid key")
+               }
+            }
 
             var getSearchResults = function () {
-               var query = $('#query').val();
-               var key = window.location.hash.substr(1)
-               $("#searchResults").html('');
+               if (validate()) {
+                  var query = $('#query').val();
+                  var key = window.location.hash.substr(1)
 
-               // $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
-               $.getJSON('http://api.traackr.com/1.0/influencers/lookup?is_tag_prefix=false&name=' + encodeURIComponent(query) + '&gender=all&count=25&page=0&sort=name&sort_order=asc&api_key=' + key, function(data) {
-                //  var $el = $('#searchResults');
-                //  var listView = new infinity.ListView($el);
+                  $("#searchResults").html('');
 
-                  var output = match_template(data);
-                  $('#searchResults').html(output);
-               });
+                  // $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
+                  $.getJSON('http://api.traackr.com/1.0/influencers/lookup?is_tag_prefix=false&name=' + encodeURIComponent(query) + '&gender=all&count=25&page=0&sort=name&sort_order=asc&api_key=' + key, function(data) {
+                   //  var $el = $('#searchResults');
+                   //  var listView = new infinity.ListView($el);
+
+                     var output = match_template(data);
+                     $('#searchResults').html(output);
+                  });
+               }
             }
 
             $('.btn-primary').click(function() {
@@ -77,6 +101,7 @@
       <div class="container">
         <img src="cyborg.jpg"/>
         <h1>Scour Influencers!</h1>
+         <div id="errorMessage" class="error"></div>
          <div id="searchForm">
             <input type="text" name="query" id="query" />&nbsp;<button type="submit" class="btn btn-primary">Scour!</button>
          </div>
