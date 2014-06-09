@@ -60,6 +60,8 @@
             }
 
             var validate = function() {
+               return true;
+               // API Key not needed for JSON results
                if (window.location.hash && window.location.hash.length) {
                   ERROR_MESSAGE.hide();
                   return true;
@@ -75,11 +77,8 @@
 
                   $("#searchResults").html('');
 
-                  // $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
-                  $.getJSON('http://api.traackr.com/1.0/influencers/lookup?is_tag_prefix=false&name=' + encodeURIComponent(query) + '&gender=all&count=25&page=0&sort=name&sort_order=asc&api_key=' + key, function(data) {
-                   //  var $el = $('#searchResults');
-                   //  var listView = new infinity.ListView($el);
-
+                  $.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
+                  
                      var output = match_template(data);
                      $('#searchResults').html(output);
                   });
@@ -89,11 +88,6 @@
             $('.btn-primary').click(function() {
                getSearchResults();
             });
-
-            $('#query').keyup(function() {
-               getSearchResults();
-            });
-
          });
       </script>
    </head>
@@ -110,6 +104,7 @@
          </div>
       </div>
 
+      <!-- Handlebars Template -->
       <script type="text/handlebars-template" class="matches-template">
          <ul class="matches">
          {{#each influencers}}
@@ -137,5 +132,6 @@
          {{/each}}
          </ul>
       </script>
+      <!-- End Handlebars Template -->      
    </body>
 </html>
