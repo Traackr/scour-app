@@ -2,7 +2,7 @@
 <html>
    <head>
       <title>Scour</title>
-      <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
       <style>
       .error {
          color: #ff0000;
@@ -13,6 +13,7 @@
           list-style-type: none;
           width: 100%;
       }
+	  ul.matches li { overflow: hidden; }
 
       .influencer {
          margin-bottom: 16px;
@@ -77,20 +78,22 @@
                         {{name}}
                      </div>
                      <div class="influencer-detail-small">
-                        {{#if location}}<strong>{{location}}</strong><br />{{/if}}
-                        {{description}}
+						<ul>
+							{{#if location}}<li><strong>{{location}}</strong></li>{{/if}}
+							<li>Reach: {{reach}}</li>
+							<li>Resonance: {{resonance}}</li>
+						</ul>
                      </div>
                   </div>
                </div>
             </li>
-            <div style="clear:both"></div>
          {{/each}}
          </ul>
       </script>
       <!-- End Handlebars Template -->  
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-      <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.2/handlebars.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.2/handlebars.min.js"></script>
 
       <script>
          $(document).ready(function() {
@@ -105,13 +108,11 @@
             }
 
             var validate = function() {
-               //return true;
-               // API Key not needed for JSON results
                if (window.location.hash && window.location.hash.length) {
                   ERROR_MESSAGE.hide();
                   return true;
                } else {
-                  showError("An API key is required to search")
+                  showError("An API key is required to search");
                }
             }
 
@@ -119,11 +120,17 @@
                if (validate()) {
                   var query = $('#query').val();
                   var key = window.location.hash.substr(1);
-
                   $("#searchResults").html('');
-
-				  $.get( "http://api-qa.traackr.com/1.0/influencers/lookup?api_key=12345&" + encodeURIComponent(query), function(data) {
-					console.log("success " + data);
+				  $.ajax({
+					type: "GET",
+					url: "http://api-qa.traackr.com/1.0/influencers/lookup?api_key=" + key + "&all_filter=" + encodeURIComponent(query),
+					success: function(data) {
+						 var output = match_template(data);
+						 $('#searchResults').html(output);
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						showError(errorThrown);
+					}
 				  });
                   /*$.getJSON('influencers.json?query=' + encodeURIComponent(query), function(data) {
                   
