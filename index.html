@@ -4,25 +4,39 @@
       <title>Scour</title>
       <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
       <style>
+	  body { background: #ebebeb; }
+	  .container { background: #fff; }
       .error {
          color: #ff0000;
+		 padding: 5px 0;
       }
+	  #searchResults {
+		padding: 10px 0;
+		margin: 10px 0;
+		border-top: solid 4px #ddd;
+	  }
 
       ul.matches
       {
           list-style-type: none;
           width: 100%;
+		  padding: 0;
       }
-	  ul.matches li { overflow: hidden; }
-
-      .influencer {
-         margin-bottom: 16px;
-      }
+	  ul.matches li.influencer { 
+		  overflow: hidden;
+		  width: 30%;
+		  display: inline-block;
+		  margin-bottom: 16px;
+	  }
+	  .influencer ul {
+		padding: 0;
+		list-style: none;
+	  }
 
       .influencer-thumb {
          display: inline-block;
          float: left;
-         width: 25%;
+         width: 50%;
          box-sizing: border-box;
       }
 
@@ -31,7 +45,7 @@
          float: left;
          margin-bottom: 16px;
          /*margin-left: 8px;*/
-         width: 75%;
+         width: 50%;
          box-sizing: border-box;
       }
 
@@ -44,19 +58,27 @@
       .influencer-match {
          margin-bottom: 16px;
          min-height: 80px;
+		overflow: hidden;
+		padding: 10px;
       }
+	  #query {
+	    padding: 6px;
+		border-radius: 2px;
+		border: 1px solid #ccc;
+	  }
       </style>
    </head>
    <body>
       <div class="container">
-        <img src="cyborg.jpg"/>
-        <h1>Scour Influencers!</h1>
-         <div id="errorMessage" class="error"></div>
-         <div id="searchForm">
-            <input type="text" name="query" id="query" />&nbsp;<button type="submit" class="btn btn-primary">Scour!</button>
-         </div>
+		<div class="header">
+			<h1>Scour Influencers!</h1>
+			 <div id="errorMessage" class="error"></div>
+			 <div id="searchForm">
+				<input type="text" name="query" id="query" />&nbsp;<button type="submit" class="btn btn-primary">Scour!</button>
+			 </div>
+		</div>
          <div id="searchResults">
-               Results Will Go Here
+               
          </div>
       </div>
 
