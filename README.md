@@ -1,4 +1,4 @@
 scour-app
 =========
 
-An app for scouring influencers
+An app for scouring influencers.
